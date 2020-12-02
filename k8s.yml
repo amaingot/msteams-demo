@@ -33,10 +33,10 @@ spec:
     spec:
       containers:
         - name: msteams-demo
-          image: gcr.io/hmm-dev/msteams-demo:latest
+          image: gcr.io/hmm-dev/msteams-demo:da21252e3a9d592a2b13f06082ec4da562dddb42
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           envFrom:
             - configMapRef:
                 name: msteams-demo-config
@@ -53,7 +53,7 @@ metadata:
     name: msteams-demo
 spec:
   ports:
-    - port: 80
+    - port: 8080
   selector:
     app: msteams-demo
 
@@ -138,4 +138,4 @@ spec:
           - path: /
             backend:
               serviceName: msteams-demo-service
-              servicePort: 80
+              servicePort: 8080

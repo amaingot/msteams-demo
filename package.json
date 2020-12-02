@@ -16,7 +16,8 @@
     "start:in-container": "yarn --cwd=server start:in-container",
     "build:web": "yarn --cwd=web build",
     "build:server": "yarn --cwd=server build",
-    "build:container": "docker build -t msteams-demo ."
+    "build:container": "docker build -t msteams-demo .",
+    "deploy:k8": "kubectl apply -f k8s.yml"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.19.4",
