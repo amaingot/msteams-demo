@@ -1,0 +1,29 @@
+overwrite: true
+schema: ./server/src/graphql/schema.ts
+config:
+  declarationKind: "interface"
+  maybeValue: T | undefined
+  scalars:
+    DateTime: Date
+
+generates:
+  server/src/graphql/generated.d.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      useIndexSignature: true
+      contextType: ./context#GraphqlContext
+      noSchemaStitching: true
+
+  web/src/graphql/hooks.generated.tsx:
+    documents: web/src/graphql/*.graphql
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withComponent: false
+      withHOC: false
+      gqlImport: apollo-boost#gql

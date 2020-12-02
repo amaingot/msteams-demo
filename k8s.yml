@@ -1,0 +1,141 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: msteams-demo
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: msteams-demo-config
+  namespace: msteams-demo
+data:
+  SOME_ENV: some-value
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: msteams-demo
+  namespace: msteams-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msteams-demo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: msteams-demo
+    spec:
+      containers:
+        - name: msteams-demo
+          image: gcr.io/hmm-dev/msteams-demo:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: msteams-demo-config
+            # - secretRef:
+            #     name: msteams-demo-secrets
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: msteams-demo-service
+  namespace: msteams-demo
+  labels:
+    name: msteams-demo
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: msteams-demo
+
+# ---
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: msteams-demo-postgres
+# spec:
+#   selector:
+#     matchLabels:
+#       app: msteams-demo-postgres
+#   serviceName: msteams-demo-postgres
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: msteams-demo-postgres
+#     spec:
+#       terminationGracePeriodSeconds: 30
+#       containers:
+#         - name: msteams-demo-postgres
+#           image: postgres:12-alpine
+#           ports:
+#             - containerPort: 5432
+#           env:
+#             - name: POSTGRES_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: msteams-demo-secrets
+#                   key: MB_DB_PASS
+#             - name: POSTGRES_DB
+#               valueFrom:
+#                 configMapKeyRef:
+#                   name: msteams-demo-config
+#                   key: MB_DB_DBNAME
+#             - name: PGDATA
+#               value: /var/lib/postgresql/data/pgdata/metabase_pgdata
+#           volumeMounts:
+#             - name: pgdata
+#               mountPath: /var/lib/postgresql/data/pgdata
+#   volumeClaimTemplates:
+#     - metadata:
+#         name: pgdata
+#       spec:
+#         accessModes: ["ReadWriteOnce"]
+#         resources:
+#           requests:
+#             storage: 10Gi
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: msteams-demo-postgres
+# spec:
+#   ports:
+#     - port: 5432
+#       targetPort: 5432
+#       protocol: TCP
+#   selector:
+#     app: msteams-demo-postgres
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: msteams-demo-ingress
+  namespace: msteams-demo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - "msteams-demo.hmm.dev"
+      secretName: msteams-demo-cert-secret
+  rules:
+    - host: "msteams-demo.hmm.dev"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: msteams-demo-service
+              servicePort: 80
