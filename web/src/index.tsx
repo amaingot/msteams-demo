@@ -2,13 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-boost";
-import { InMemoryCache } from "apollo-cache-inmemory";
-
-import "mapbox-gl/dist/mapbox-gl.css";
 
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
 import config from "./utils/config";
+import reportWebVitals from "./reportWebVitals";
 
 const client = new ApolloClient({
   uri: `${
@@ -16,14 +13,13 @@ const client = new ApolloClient({
       ? "http://localhost:8080/graphql"
       : "/graphql"
   }`,
-  cache: new InMemoryCache(),
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
+  <ApolloProvider client={client as any}>
     <App />
   </ApolloProvider>,
   document.getElementById("root")
 );
 
-serviceWorker.unregister();
+reportWebVitals(console.log);

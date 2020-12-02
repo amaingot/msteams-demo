@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -27,25 +26,19 @@ const HomePage: React.FC = () => {
         <Grid item xs={12}>
           <Card>
             <CardHeader title="Over Time" />
-            <CardContent>
-              Boom
-            </CardContent>
+            <CardContent>Boom</CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
           <Card>
             <CardHeader title="By Issue Reported" />
-            <CardContent>
-              nah bro.
-            </CardContent>
+            <CardContent>nah bro.</CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
           <Card>
             <CardHeader title="By Issue Reported" />
-            <CardContent>
-              Wut r u talkin bout?
-            </CardContent>
+            <CardContent>Wut r u talkin bout?</CardContent>
           </Card>
         </Grid>
       </Grid>
