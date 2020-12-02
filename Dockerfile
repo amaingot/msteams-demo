@@ -9,9 +9,9 @@ COPY . .
 ARG SHA
 ENV SHA=${SHA}
 
-RUN yarn
+RUN yarn --frozen-lockfile
 
-RUN yarn build:web
+RUN yarn generate
 
 RUN yarn build:web
 

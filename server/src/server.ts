@@ -7,6 +7,7 @@ import { GraphqlContext } from "./graphql/context";
 import { appLogger, appErrorLogger, logger } from "./utils/logger";
 import renderHtml from "./utils/renderHtml";
 import serveStaticAssets from "./utils/serveStaticAssets";
+import serveTeamsManifest from "./utils/serveTeamsManifest";
 
 const config = {
   name: "msteams-demo",
@@ -37,16 +38,15 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-
 app.use(appErrorLogger());
 
 app.use(serveStaticAssets());
 
+app.get("/ms-teams/manifest.json", serveTeamsManifest);
+
 app.get("/*", renderHtml);
 
-app.listen(config.port, config.host, (e) => {
-  if (e) {
-    throw new Error("Internal Server Error");
-  }
+app.listen(config.port, config.host, () => {
   logger.info(`${config.name} running on ${config.host}:${config.port}`);
+  logger.info("Visit http://localhost:8080");
 });

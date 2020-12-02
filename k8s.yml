@@ -129,10 +129,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "msteams-demo.hmm.dev"
+        - "teams.hmm.dev"
       secretName: msteams-demo-cert-secret
   rules:
-    - host: "msteams-demo.hmm.dev"
+    - host: "teams.hmm.dev"
       http:
         paths:
           - path: /

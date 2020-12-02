@@ -106,3 +106,6 @@ dist
 ## Generated files
 generated.d.ts
 hooks.generated.tsx
+
+## Web
+web/build

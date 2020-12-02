@@ -1,0 +1,6 @@
+build
+node_modules
+
+## Generated files
+generated.d.ts
+hooks.generated.tsx
