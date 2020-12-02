@@ -21,25 +21,7 @@ const HomePage: React.FC = () => {
     <Layout>
       <Grid container spacing={4} className={classes.gridContainer}>
         <Grid item xs={12}>
-          Uh okay
-        </Grid>
-        <Grid item xs={12}>
-          <Card>
-            <CardHeader title="Over Time" />
-            <CardContent>Boom</CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader title="By Issue Reported" />
-            <CardContent>nah bro.</CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardHeader title="By Issue Reported" />
-            <CardContent>Wut r u talkin bout?</CardContent>
-          </Card>
+          One day there will be content!
         </Grid>
       </Grid>
     </Layout>

@@ -50,7 +50,7 @@ const Layout: React.FC<Props> = (props) => {
   const history = useHistory();
   const { title = "", fullScreen = false } = props;
 
-  const pageTitle = `Austin Data ${title && `| ${title}`}`;
+  const pageTitle = `Microsoft Teams Demo ${title && `| ${title}`}`;
 
   React.useEffect(() => {
     document.title = pageTitle;
@@ -78,13 +78,6 @@ const Layout: React.FC<Props> = (props) => {
               onClick={() => history.push("/")}
             >
               Home
-            </Button>
-            <Button
-              className={classes.navButton}
-              color="inherit"
-              onClick={() => history.push("/map")}
-            >
-              Map
             </Button>
           </nav>
         </Toolbar>
